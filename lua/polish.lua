@@ -16,3 +16,35 @@ vim.filetype.add {
     ["~/%.config/foo/.*"] = "fooscript",
   },
 }
+vim.api.nvim_create_autocmd("FileType", {
+pattern = "python",
+callback = function()
+  vim.keymap.set("n", "<F3>", ":call flake8#Flake8()<CR>", { buffer = true, noremap = true, silent = true })
+end,
+})    --
+vim.g.netrw_list_hide = ''
+vim.api.nvim_set_hl(0, "Visual", { bg = "DarkGrey", fg = "white" })
+vim.opt.mouse = ""
+
+-- require("copilot_cmp").setup()
+require("oil").setup()
+require('lualine').setup({
+  options = { theme = 'modus-vivendi' }
+})
+
+require('telescope').setup({
+defaults = {
+  vimgrep_arguments = {
+    'rg',
+    '--color=never',
+    '--no-heading',
+    '--with-filename',
+    '--line-number',
+    '--column',
+    '--smart-case',
+    '--hidden',
+    '-L',
+  },
+},
+})
+

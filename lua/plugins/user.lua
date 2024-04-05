@@ -1,4 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 -- You can also add or configure plugins by creating files in this `plugins/` folder
 -- Here are some examples:
@@ -14,6 +13,98 @@ return {
     event = "BufRead",
     config = function() require("lsp_signature").setup() end,
   },
+  {
+    "jlanzarotta/bufexplorer",
+    keys = { "<leader>be" },
+  },
+
+  {
+    "psf/black",
+    cmd = "Black",
+  },
+  -- {
+  --   "github/copilot.vim",
+  --   cmd = "Copilot",
+  -- },
+  -- {
+  --   "zbirenbaum/copilot-cmp",
+  --   config = function()
+  --       require("copilot_cmp").setup()
+  --   end,
+  -- },
+  {
+      "zbirenbaum/copilot.lua",
+      cmd = "Copilot",
+      event = "InsertEnter",
+      config = function()
+        -- require("copilot").setup({})
+        require('copilot').setup({
+          panel = {
+            enabled = true,
+            auto_refresh = false,
+            keymap = {
+              jump_prev = "[[",
+              jump_next = "]]",
+              accept = "<CR>",
+              refresh = "gr",
+              open = "<M-CR>"
+            },
+            layout = {
+              position = "bottom", -- | top | left | right
+              ratio = 0.4
+            },
+          },
+          suggestion = {
+            enabled = true,
+            auto_trigger = true,
+            debounce = 75,
+            keymap = {
+              accept = "<C-l>",
+              accept_word = false,
+              accept_line = false,
+              next = "<C-n>",
+              prev = "<C-p>",
+              dismiss = "<C-d>",
+            },
+          },
+          filetypes = {
+            yaml = false,
+            markdown = false,
+            help = false,
+            gitcommit = false,
+            gitrebase = false,
+            hgcommit = false,
+            svn = false,
+            cvs = false,
+            ["."] = false,
+          },
+          copilot_node_command = 'node', -- Node.js version must be > 18.x
+          server_opts_overrides = {},
+        })
+      end,
+  },
+  {
+    "nvie/vim-flake8",
+    ft = "python",
+    config = function()
+      -- Configuration options for vim-flake8, if any
+    end,
+  },
+  {
+    "tpope/vim-obsession",
+    cmd = "Obsession",
+      -- Configuration options for vim-flake8, if any
+  },
+  {
+    "stevearc/oil.nvim",
+    cmd = "Oil",
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+  },
+
+
 
   -- == Examples of Overriding Plugins ==
 
