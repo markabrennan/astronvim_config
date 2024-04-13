@@ -1,5 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
 -- Configuration documentation can be found with `:h astrolsp`
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
@@ -10,6 +8,7 @@ return {
   "AstroNvim/astrolsp",
   ---@type AstroLSPOpts
   opts = {
+    ---@diagnostic disable: missing-fields
     -- Configuration table of features provided by AstroLSP
     features = {
       autoformat = true, -- enable or disable auto formatting on start
@@ -40,12 +39,36 @@ return {
     },
     -- enable servers that you already have installed without mason
     servers = {
-      -- "pyright"
+      "pyright",
+      "lua_ls",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
+    -- config = {
+    --   -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+    -- },
     config = {
-      -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      lua_ls = {
+        settings = {
+          Lua = {
+            runtime = {
+              version = "LuaJIT",
+            },
+            diagnostics = {
+              globals = { "vim" },
+            },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+            },
+            telemetry = {
+              enable = false,
+            },
+          },
+        },
+        root_dir = function(fname)
+          return vim.fn.getcwd() -- Sets the current working directory as the root directory.
+        end,
+      },
     },
     -- customize how language servers are attached
     handlers = {
