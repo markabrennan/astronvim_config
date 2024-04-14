@@ -1,11 +1,8 @@
-
 -- You can also add or configure plugins by creating files in this `plugins/` folder
 -- Here are some examples:
 
 ---@type LazySpec
 return {
-
-  -- == Examples of Adding Plugins ==
 
   "andweeb/presence.nvim",
   {
@@ -17,7 +14,10 @@ return {
     "jlanzarotta/bufexplorer",
     keys = { "<leader>be" },
   },
-
+  {
+    "duff/vim-scratch",
+    cmd = "Scratch",
+  },
   {
     "psf/black",
     cmd = "Black",
@@ -33,55 +33,55 @@ return {
   --   end,
   -- },
   {
-      "zbirenbaum/copilot.lua",
-      cmd = "Copilot",
-      event = "InsertEnter",
-      config = function()
-        -- require("copilot").setup({})
-        require('copilot').setup({
-          panel = {
-            enabled = true,
-            auto_refresh = false,
-            keymap = {
-              jump_prev = "[[",
-              jump_next = "]]",
-              accept = "<CR>",
-              refresh = "gr",
-              open = "<M-CR>"
-            },
-            layout = {
-              position = "bottom", -- | top | left | right
-              ratio = 0.4
-            },
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      -- require("copilot").setup({})
+      require("copilot").setup {
+        panel = {
+          enabled = true,
+          auto_refresh = false,
+          keymap = {
+            jump_prev = "[[",
+            jump_next = "]]",
+            accept = "<CR>",
+            refresh = "gr",
+            open = "<M-CR>",
           },
-          suggestion = {
-            enabled = true,
-            auto_trigger = true,
-            debounce = 75,
-            keymap = {
-              accept = "<C-l>",
-              accept_word = false,
-              accept_line = false,
-              next = "<C-n>",
-              prev = "<C-p>",
-              dismiss = "<C-d>",
-            },
+          layout = {
+            position = "bottom", -- | top | left | right
+            ratio = 0.4,
           },
-          filetypes = {
-            yaml = false,
-            markdown = false,
-            help = false,
-            gitcommit = false,
-            gitrebase = false,
-            hgcommit = false,
-            svn = false,
-            cvs = false,
-            ["."] = false,
+        },
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          debounce = 75,
+          keymap = {
+            accept = "<C-l>",
+            accept_word = false,
+            accept_line = false,
+            next = "<C-n>",
+            prev = "<C-p>",
+            dismiss = "<C-d>",
           },
-          copilot_node_command = 'node', -- Node.js version must be > 18.x
-          server_opts_overrides = {},
-        })
-      end,
+        },
+        filetypes = {
+          yaml = false,
+          markdown = false,
+          help = false,
+          gitcommit = false,
+          gitrebase = false,
+          hgcommit = false,
+          svn = false,
+          cvs = false,
+          ["."] = false,
+        },
+        copilot_node_command = "node", -- Node.js version must be > 18.x
+        server_opts_overrides = {},
+      }
+    end,
   },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
@@ -106,18 +106,16 @@ return {
   {
     "tpope/vim-obsession",
     cmd = "Obsession",
-      -- Configuration options for vim-flake8, if any
+    -- Configuration options for vim-flake8, if any
   },
   {
     "stevearc/oil.nvim",
     cmd = "Oil",
   },
   {
-    'nvim-lualine/lualine.nvim',
-    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+    "nvim-lualine/lualine.nvim",
+    requires = { "nvim-tree/nvim-web-devicons", opt = true },
   },
-
-
 
   -- == Examples of Overriding Plugins ==
 
