@@ -1,5 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
 -- Configuration documentation can be found with `:h astrolsp`
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
@@ -40,12 +38,63 @@ return {
     },
     -- enable servers that you already have installed without mason
     servers = {
-      -- "pyright"
+      -- "pyright",
+      "pyright",
+      "ruff_lsp",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      ruff_lsp = {
+        on_attach = function(client, bufnr)
+          print("Ruff LSP attached to buffer " .. bufnr)
+
+          -- Disable Pyright's formatting to avoid conflicts
+          for _, other_client in ipairs(vim.lsp.get_clients()) do
+            if other_client.name == "pyright" then
+              other_client.server_capabilities.documentFormattingProvider = false
+            end
+          end
+
+          -- Enable Ruff's formatting
+          client.server_capabilities.documentFormattingProvider = true
+          client.server_capabilities.documentRangeFormattingProvider = true
+
+          -- Add a keybinding for Ruff's code actions
+          vim.api.nvim_buf_set_keymap(
+            bufnr,
+            "n",
+            "<leader>ra",
+            "<cmd>lua vim.lsp.buf.code_action()<CR>",
+            { noremap = true, silent = true, desc = "Ruff: Code Actions" }
+          )
+        end,
+        settings = {
+          ruff_lsp = {
+            organizeImports = true,
+            fixAll = true,
+            logLevel = "debug",
+          },
+        },
+      },
+      -- Add this pyright configuration
+      pyright = {
+        settings = {
+          python = {
+            analysis = {
+              typeCheckingMode = "off",
+              reportAttributeAccessIssue = false,
+              reportGeneralTypeIssues = false,
+              reportUnknownMemberType = false,
+              reportUnknownArgumentType = false,
+              reportUnknownParameterType = false,
+              reportUnknownVariableType = false,
+              reportCallIssue = false,
+            },
+          },
+        },
+      },
     },
     -- customize how language servers are attached
     handlers = {
