@@ -40,13 +40,14 @@ return {
     servers = {
       -- "pyright",
       "pyright",
-      "ruff_lsp",
+      "ruff",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
-      ruff_lsp = {
+      ruff = {
+        cmd = { "ruff", "server" },
         on_attach = function(client, bufnr)
           print("Ruff LSP attached to buffer " .. bufnr)
 
@@ -71,7 +72,7 @@ return {
           )
         end,
         settings = {
-          ruff_lsp = {
+          ruff = {
             organizeImports = true,
             fixAll = true,
             logLevel = "debug",

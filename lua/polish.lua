@@ -50,6 +50,19 @@ vim.api.nvim_create_user_command("RuffDiff", function()
   vim.cmd("vsplit | terminal ruff format --diff " .. vim.fn.shellescape(file))
 end, { desc = "Preview Ruff Fixes in Diff Mode" })
 
+vim.api.nvim_create_user_command("HideRuffDiagnostics", function()
+  vim.diagnostic.hide(nil, 0)
+  print "Diagnostics hidden"
+end, {})
+
+vim.api.nvim_create_user_command("ShowRuffDiagnostics", function()
+  vim.diagnostic.show(nil, 0)
+  print "Diagnostics shown"
+end, {})
+
+vim.api.nvim_set_keymap("n", "<leader>hr", ":HideRuffDiagnostics<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>sr", ":ShowRuffDiagnostics<CR>", { noremap = true, silent = true })
+
 vim.g.netrw_list_hide = ""
 vim.api.nvim_set_hl(0, "Visual", { bg = "DarkGrey", fg = "white" })
 vim.opt.mouse = ""
